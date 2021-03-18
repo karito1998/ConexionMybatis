@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace = "mybatis.interfaz.virtualAliasesInterface">
+    <!--
+    <resultMap id = "result" type = "mybatis.model.virtualAliasesModel">
+        <result property = "id" column = "id"/>
+        <result property = "domain_id" column = "domain_id"/>
+        <result property = "source" column = "source"/>
+        <result property = "destination" column = "destination"/>
+        <result property = "CurrentState" column = "CurrentState"/>
+        <result property = "DateCreate" column = "DateCreate"/>
+        <result property = "DateUpdate" column = "DateUpdate"/>
+        <result property = "priority" column = "priority"/>
+        <result property = "aliasforward" column = "aliasforward"/>
+        <result property = "user_id" column = "user_id"/>
+        <result property = "groupid" column = "groupid"/>
+    </resultMap>-->
+
+    <select id="getAliasById" resultType="mybatis.model.virtualAliasesModel">
+        SELECT * FROM virtual_aliases where id = #{id};
+    </select>
+
+    <select id="getAliases" resultType="mybatis.model.virtualAliasesModel">
+        SELECT * FROM virtual_aliases LIMIT 5;
+    </select>
+
+    <update id="updateAliasStatus" parameterType="mybatis.model.virtualAliasesModel" useGeneratedKeys="true" keyColumn="id" keyProperty="id">
+        UPDATE virtual_aliases SET CurrentState = #{CurrentState} WHERE id, DateUpdate = #{DateUpdate} = #{id};
+        <!--, DateUpdate = #{DateUpdate, jdbcType=TIMESTAMP}-->
+    </update>
+
+    <insert id="insertAlias" parameterType="mybatis.model.virtualAliasesModel" useGeneratedKeys="true" keyColumn="id" keyProperty="id">
+        INSERT INTO virtual_aliases (domain_id, source, destination, CurrentState, aliasforward)
+        VALUES (#{domain_id}, #{source}, #{destination}, #{CurrentState}, #{aliasforward})
+    </insert>
+
+    <delete id="deleteAliasById">
+        DELETE FROM virtual_aliases WHERE id = #{id}
+    </delete>
+</mapper>
